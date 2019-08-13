@@ -1,11 +1,37 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import axios from "axios";
 
 export default class Joke extends Component {
-    render() {
-        return (
-            <div>
-                <h1>JOKE TEXT HERE</h1>
-            </div>
-        )
-    }
+  state = {
+    joke: null
+  };
+  handleClick = e => {
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        Accept: "application/json"
+      }
+    };
+    axios
+      .get("https://icanhazdadjoke.com/", config)
+      .then(res => {
+        this.setState({ joke: res.data.joke });
+      })
+      .catch(err => console.log(err));
+  };
+  render() {
+    return (
+      <div className="container">
+        <button
+          onClick={this.handleClick}
+          type="button"
+          className="btn btn-info btn-circle btn-xl"
+        >
+          <i className="far fa-play-circle" />
+        </button>
+        <h1>{this.state.joke}</h1>
+      </div>
+    );
+  }
 }

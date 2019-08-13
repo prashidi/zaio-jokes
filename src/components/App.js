@@ -11,6 +11,7 @@ import store from "../store";
 import Dashboard from "./jokes/Dashboard";
 import Header from "./layouts/Header";
 import Login from "./accounts/Login";
+import Joke from "./jokes/Joke";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/joke" component={Login} />
+              <Route exact path="/joke" component={Joke} />
             </Switch>
           </div>
         </Fragment>
