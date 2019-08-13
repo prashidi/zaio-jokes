@@ -1,9 +1,10 @@
-import { USER_LOADING, USER_LOADED, AUTH_ERROR } from "./types";
+import { USER_LOADING, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL } from "./types";
 
+//loading user 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
-  const user = getState().auth.user;
+  const user = localStorage.getItem('user')
 
   if (user) {
     dispatch({
@@ -16,3 +17,23 @@ export const loadUser = () => (dispatch, getState) => {
     });
   }
 };
+
+//Login user 
+export const login = (email, password) => dispatch => {
+  const user = {};
+  if (email === "joker@zaio.io" && password === "zaiojoke") {
+    user.email = email;
+    user.password = password;
+    console.log(user)
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: user
+    })
+  } else {
+    dispatch({
+      type: LOGIN_FAIL
+    })
+  }
+}
+
+

@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
 
 export class Login extends Component {
+  static propTypes = {
+    login: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+  }
   state = {
     email: "",
     password: "",
-    isAuthenticated: false
   };
 
   onSubmit = e => {
     e.preventDefault();
-    const { email, password } = this.state;
-    if (email === "joker@zaio.io" && password === "zaiojoke") {
-      this.setState({
-        isAuthenticated: true
-      });
-    }
+    this.props.login(this.state.email, this.state.password)
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -23,11 +24,9 @@ export class Login extends Component {
   render() {
     const { email, password } = this.state;
 
-    if (this.state.isAuthenticated) {
+    if (this.props.isAuthenticated) {
       return <Redirect to="/joke" />;
-    } else {
-      console.log("Error");
-    }
+    } 
     return (
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
@@ -69,4 +68,12 @@ export class Login extends Component {
     );
   }
 }
-export default Login;
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(
+  mapStateToProps,
+  { login }
+)(Login);
