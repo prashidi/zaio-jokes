@@ -22,16 +22,20 @@ export default class Joke extends Component {
   };
   render() {
     return (
-      <div className="container">
-        <button
-          onClick={this.handleClick}
-          type="button"
-          className="btn btn-info btn-circle btn-xl"
-        >
-          <i className="far fa-play-circle" />
-        </button>
-        <h1>{this.state.joke}</h1>
-      </div>
+        <div className="home">
+          <div>
+          <h1>{this.state.joke}</h1>
+          </div>
+          <div className="joke">
+          <button
+            onClick={this.handleClick}
+            type="button"
+            className="btn btn-info btn-circle btn-xl"
+          >
+            <i className="far fa-play-circle" />
+          </button>
+          </div>
+        </div>
     );
   }
 }

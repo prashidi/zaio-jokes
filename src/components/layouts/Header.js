@@ -1,38 +1,76 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { logout } from "../../actions/auth";
 
 export class Header extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired
+  };
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const authLinks = (
+      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+        <li className="nav-item">
+          <Link to="/joke" className="nav-link navStyle">
+            Crack Joke
+          </Link>
+        </li>
+        <button
+          onClick={this.props.logout}
+          className="nav-link btn btn-info btn-sm logout navStyle2"
+        >
+          Logout
+        </button>
+      </ul>
+    );
+
+    const guestLinks = (
+      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+        <li className="nav-item">
+          <Link to="/login" className="nav-link navStyle">
+            Login
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/register" className="nav-link navStyle2">
+            Register
+          </Link>
+        </li>
+      </ul>
+    );
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-light">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarTogglerDemo01"
-          aria-controls="navbarTogglerDemo01"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
-          <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li className="nav-item mr-3">
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/register" className="nav-link">
-                Register
-              </Link>
-            </li>
-          </ul>
+        <div className="container">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+            {isAuthenticated ? authLinks : guestLinks}
+          </div>
         </div>
       </nav>
     );
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logout }
+)(Header);
