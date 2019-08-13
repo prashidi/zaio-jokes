@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export class Header extends Component {
   render() {
@@ -16,16 +17,16 @@ export class Header extends Component {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <a className="nav-link" href="#">
+          <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li className="nav-item mr-3">
+              <Link to="/login" className="nav-link">
                 Login
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link to="/register" className="nav-link">
                 Register
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
